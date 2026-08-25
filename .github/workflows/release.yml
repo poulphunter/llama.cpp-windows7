@@ -72,6 +72,11 @@ jobs:
             -DGGML_BACKEND_DL=ON ^
             -DGGML_CPU_ALL_VARIANTS=${{ matrix.arch == 'x64' && 'ON' || 'OFF' }} ^
             -DGGML_OPENMP=ON ^
+            -DCMAKE_C_FLAGS="-D_WIN32_WINNT=0x0601 -static" ^
+            -DCMAKE_CXX_FLAGS="-D_WIN32_WINNT=0x0601 -static-libgcc -static-libstdc++ -static" ^
+            -DLLAMA_WIN7_COMPAT=ON ^
+            -DLLAMA_NATIVE=OFF ^
+            -DBUILD_SHARED_LIBS=OFF ^
             ${{ env.CMAKE_ARGS }}
           cmake --build build --config Release
 
@@ -126,6 +131,11 @@ jobs:
             -DGGML_BACKEND_DL=ON ^
             -DGGML_CPU_ALL_VARIANTS=${{ matrix.arch == 'x64' && 'ON' || 'OFF' }} ^
             -DGGML_OPENMP=ON ^
+            -DCMAKE_C_FLAGS="-D_WIN32_WINNT=0x0601 -static" ^
+            -DCMAKE_CXX_FLAGS="-D_WIN32_WINNT=0x0601 -static-libgcc -static-libstdc++ -static" ^
+            -DLLAMA_WIN7_COMPAT=ON ^
+            -DLLAMA_NATIVE=OFF ^
+            -DBUILD_SHARED_LIBS=OFF ^
             ${{ env.CMAKE_ARGS }}
           cmake --build build --config Release
 
@@ -287,10 +297,6 @@ jobs:
             echo "Moving $zip_file to release/$zip_name"
             mv "$zip_file" "release/$zip_name"
           done
-
-          echo "Moving other artifacts..."
-          mv -v artifact/*.zip release
-          mv -v artifact/*.tar.gz release
 
       - name: Create release
         id: create_release
