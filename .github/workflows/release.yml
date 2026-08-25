@@ -261,7 +261,7 @@ jobs:
           mkdir -p release
 
           echo "Adding CPU backend files to existing zips..."
-          for arch in x64 arm64; do
+          for arch in x64; do
             cpu_zip="artifact/llama-bin-win-cpu-${arch}.zip"
             temp_dir=$(mktemp -d)
             echo "Extracting CPU backend for $arch..."
